@@ -8,20 +8,26 @@ let previousInput = "";
 let operator = "";
 
 const updateDisplay = (value) => {
+  if (value === "NaN") {
+    display.style.color = "red";
+    display.value = "Error";
+    return;
+  }
   display.value = value || "0";
 };
 
 const handleButtonClick = (value) => {
   if (!isNaN(value) || value === ".") {
     currentInput += value;
+    updateDisplay(currentInput);
   } else if (["+", "-", "*", "/"].includes(value)) {
     if (currentInput) {
       previousInput = currentInput;
       currentInput = "";
     }
     operator = value;
+    updateDisplay(operator);
   }
-  updateDisplay(currentInput || previousInput);
 };
 
 const calculateResult = () => {
